@@ -1,0 +1,124 @@
+get Restaurant by id 100
+http://localhost:8080/graduation_war/rest/admin/restaurant/100
+
+{
+   "id":100,
+   "name":"rest1",
+   "menu":[
+      {
+         "id":112,
+         "name":"стейк",
+         "price":150
+      },
+      {
+         "id":113,
+         "name":"харчо",
+         "price":69
+      },
+      {
+         "id":111,
+         "name":"пюре",
+         "price":50
+      }
+   ],
+   "voice":null,
+   "updateMenu":"2021-01-08T15:34:57.478+00:00"
+}
+_____________________________________________________________________
+get all users
+http://localhost:8080/graduation_war/rest/admin/users
+
+[
+   {
+      "id":103,
+      "name":"User",
+      "email":"user@yandex.ru",
+      "password":"{noop}password",
+      "registered":"2020-12-30T23:00:00.000+00:00",
+      "enabled":true,
+      "roles":[
+         "USER"
+      ],
+      "voice":null
+   },
+   {
+      "id":104,
+      "name":"Admin",
+      "email":"admin@gmail.com",
+      "password":"{noop}admin",
+      "registered":"2020-12-20T23:00:00.000+00:00",
+      "enabled":true,
+      "roles":[
+         "ADMIN"
+      ],
+      "voice":null
+   },
+   {
+      "id":105,
+      "name":"User1",
+      "email":"user1@gmail.com",
+      "password":"{noop}user1",
+      "registered":"2020-12-10T23:00:00.000+00:00",
+      "enabled":true,
+      "roles":[
+         "USER"
+      ],
+      "voice":null
+   },
+   {
+      "id":106,
+      "name":"User2",
+      "email":"user2@gmail.com",
+      "password":"{noop}user2",
+      "registered":"2020-11-30T23:00:00.000+00:00",
+      "enabled":true,
+      "roles":[
+         "USER"
+      ],
+      "voice":null
+   }
+]
+__________________________________________________________________
+get voice -> id 107
+http://localhost:8080/graduation_war/rest/admin/voice/107
+
+{
+   "id":107,
+   "user":{
+      "id":103,
+      "name":"User",
+      "email":"user@yandex.ru",
+      "password":"{noop}password",
+      "registered":"2020-12-30T23:00:00.000+00:00",
+      "enabled":true,
+      "roles":[
+         "USER"
+      ],
+      "voice":null
+   },
+   "restaurant":{
+      "id":100,
+      "name":"rest1",
+      "menu":[
+         {
+            "id":112,
+            "name":"стейк",
+            "price":150
+         },
+         {
+            "id":113,
+            "name":"харчо",
+            "price":69
+         },
+         {
+            "id":111,
+            "name":"пюре",
+            "price":50
+         }
+      ],
+      "voice":null,
+      "updateMenu":"2021-01-08T15:34:57.478+00:00"
+   },
+   "date":"2021-01-01"
+}
+_____________________________________________________________________

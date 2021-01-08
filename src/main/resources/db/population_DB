@@ -1,0 +1,36 @@
+ALTER SEQUENCE global_seq RESTART WITH 100;
+
+INSERT INTO restaurants (name)
+VALUES ('rest1'),
+       ('rest2'),
+       ('rest3');
+
+INSERT INTO users (name, email, password, registered, enabled)
+VALUES ('User', 'user@yandex.ru', '{noop}password', '2020-12-31', true),
+       ('Admin', 'admin@gmail.com', '{noop}admin', '2020-12-21', true),
+       ('User1', 'user1@gmail.com', '{noop}user1', '2020-12-11', true),
+       ('User2', 'user2@gmail.com', '{noop}user2', '2020-12-01', true);
+
+INSERT INTO user_roles (role, user_id)
+VALUES ('USER', 103),
+       ('ADMIN', 104),
+       ('USER', 105),
+       ('USER', 106);
+
+INSERT INTO voice (user_id, restaurant_id, vote)
+VALUES (103, 100, '2021-01-01'),
+       (104, 101, '2021-01-01'),
+       (105, 100, '2021-01-01'),
+       (106, 102, '2021-01-01');
+
+INSERT INTO dish (name, price, restaurant_id)
+VALUES ('пюре', '50', 100),
+       ('стейк', '150', 100),
+       ('харчо', '69', 100),
+       ('пача', '79', 101),
+       ('хинкали', '69', 101),
+       ('салат "Греческий"', '89', 101),
+       ('суп с овощами', '59', 102),
+       ('форель', '99', 102),
+       ('салат "цезарь"', '119', 102);
+
