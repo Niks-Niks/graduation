@@ -33,13 +33,11 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         return prepareAndSave(user);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
@@ -48,23 +46,20 @@ public class UserService implements UserDetailsService {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    @Cacheable("users")
     public List<User> findAll() {
         return repository.findAll();
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         prepareAndSave(user);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void enable(int id, boolean enabled) {
         User user = get(id);
         user.setEnabled(enabled);
-        repository.save(user);  // !! need only for JDBC implementation
+        repository.save(user);
     }
 
     @Override
