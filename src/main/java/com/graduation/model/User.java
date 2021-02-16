@@ -48,9 +48,9 @@ public class User extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     @JsonManagedReference
-    private Set<Voice> voice;
+    private Set<Vote> voice;
 
-    public User(Integer id, String name, String email, String password, Date registered, boolean enabled, Set<Role> roles, Set<Voice> voice) {
+    public User(Integer id, String name, String email, String password, Date registered, boolean enabled, Set<Role> roles, Set<Vote> voice) {
         super(id, name);
         this.email = email;
         this.password = password;
@@ -60,7 +60,7 @@ public class User extends AbstractNamedEntity {
         this.voice = voice;
     }
 
-    public User(Integer id, String name, @Email @NotBlank @Size(max = 100) String email, @NotBlank @Size(min = 5, max = 100) String password, boolean enabled, Role roles, Voice voice) {
+    public User(Integer id, String name, @Email @NotBlank @Size(max = 100) String email, @NotBlank @Size(min = 5, max = 100) String password, boolean enabled, Role roles, Vote voice) {
         super(id, name);
         this.email = email;
         this.password = password;
@@ -71,7 +71,7 @@ public class User extends AbstractNamedEntity {
     }
 
     public User(Integer userId, String user, String email, String password, Role role) {
-        this(userId, user, email, password, new Date(), true, Collections.singleton(role), Collections.singleton(new Voice()));
+        this(userId, user, email, password, new Date(), true, Collections.singleton(role), Collections.singleton(new Vote()));
     }
 
     public User(User user) {
@@ -114,11 +114,11 @@ public class User extends AbstractNamedEntity {
         this.enabled = enabled;
     }
 
-    public Set<Voice> getvoice() {
+    public Set<Vote> getvoice() {
         return voice;
     }
 
-    public void setvoice(Set<Voice> voice) {
+    public void setvoice(Set<Vote> voice) {
         this.voice = voice;
     }
 

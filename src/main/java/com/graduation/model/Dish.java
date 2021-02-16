@@ -1,6 +1,7 @@
 package com.graduation.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -9,13 +10,14 @@ import javax.persistence.*;
 @Table(name = "dish")
 public class Dish extends AbstractNamedEntity {
     @Column(name = "price", nullable = false)
-    @Range(min = 1, max = 10000)
+    @Range(min = 1, max = 1_000_000)
     private int price;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "menu_id", nullable = false)
     @JsonBackReference
-    private Restaurant restaurant;
+    @NotNull
+    private Menu menu;
 
     public Dish(Integer id, String name, int price) {
         super(id, name);
@@ -25,20 +27,20 @@ public class Dish extends AbstractNamedEntity {
     public Dish() {
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
     }
 
     @Override

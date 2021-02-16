@@ -1,8 +1,9 @@
 package com.graduation.web.dish;
 
 import com.graduation.model.Dish;
-import com.graduation.repository.DishRepository;
-import com.graduation.repository.RestaurantRepository;
+import com.graduation.model.Menu;
+import com.graduation.controller.DishRepository;
+import com.graduation.controller.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -15,50 +16,51 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-import static com.graduation.Util.ValidationUtil.assureIdConsistent;
-import static com.graduation.Util.ValidationUtil.checkNotFoundWithId;
+import static com.graduation.util.ValidationUtil.assureIdConsistent;
+import static com.graduation.util.ValidationUtil.checkNotFoundWithId;
 
 @RestController
-@RequestMapping(value = RestDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestDishController {
-    public static final String REST_URL = "/rest/admin/dish";
+@RequestMapping(value = DishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class DishRestController {
+    public static final String REST_URL = "/rest/admin/";
 
     @Autowired
     private DishRepository repository;
 
     @Autowired
-    private RestaurantRepository restaurantRepository;
+    private MenuRepository menuRepository;
 
-    @GetMapping
+    @GetMapping("dishes")
     public List<Dish> getAll() {
         return repository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("dish/{id}")
     public Dish get(@PathVariable int id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow();
     }
 
-    @PostMapping(value = "/{rest_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @Param("rest_id") int restId) {
+    @PostMapping(value = "dish/{menu_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @Param("menu_id") int menuId) {
         if (!dish.isNew()) {
             return null;
         }
-        dish.setRestaurant(restaurantRepository.findById(restId).orElse(null));
+        Menu menu = menuRepository.findById(menuId).orElseThrow();
+        dish.setMenu(menu);
         Dish created = repository.save(dish);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/rest/{id}")
+        URI uriOfNewResorce = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/dish/{id}")
                 .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        return ResponseEntity.created(uriOfNewResorce).body(created);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("dish/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "dish/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Dish dish, @Param("id") int id) {
         assureIdConsistent(dish, id);

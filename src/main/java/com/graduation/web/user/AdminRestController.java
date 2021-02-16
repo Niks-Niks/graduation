@@ -13,11 +13,11 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-import static com.graduation.Util.ValidationUtil.assureIdConsistent;
+import static com.graduation.util.ValidationUtil.assureIdConsistent;
 
 @RestController
-@RequestMapping(value = RestAdminController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestAdminController {
+@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminRestController {
     static final String REST_URL = "/rest/admin/users";
 
     @Autowired
@@ -53,10 +53,5 @@ public class RestAdminController {
     public void update(@Valid @RequestBody User user, @PathVariable("id") int id) {
         assureIdConsistent(user, id);
         service.update(user);
-    }
-
-    @GetMapping("/voice/{id}")
-    public List<User> getVoice(@PathVariable("id") int id) {
-        return service.getByVoice(id);
     }
 }

@@ -7,11 +7,10 @@
 
     <bean class="com.graduation.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
-    <context:component-scan base-package="com.graduation.**.web"/>
-
+    <!-- serve static resources (*.html, ...) from src/main/webapp/ -->
     <mvc:default-servlet-handler/>
 
-    <mvc:annotation-driven >
+    <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
@@ -26,5 +25,7 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <context:component-scan base-package="com.graduation.web"/>
 
 </beans>

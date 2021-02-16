@@ -10,13 +10,13 @@ public class TestRestaurantData {
     public static final int RESTAURANT_ID = ID;
     public static final int NOT_FOUND = 10;
 
-    public static final Restaurant restaurant = new Restaurant(RESTAURANT_ID, "Shale");
+    public static final Restaurant restaurant = new Restaurant(RESTAURANT_ID, "restUpdate");
 
     public static Restaurant getNew() {
-        return new Restaurant(null, "New");
+        return new Restaurant(null, "restNew");
     }
 
     public static Restaurant getUpdated() {
-        return new Restaurant(null, "update");
+        return new Restaurant(null, "restUpdate");
     }
 }

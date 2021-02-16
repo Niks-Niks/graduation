@@ -1,7 +1,7 @@
 package com.graduation.web.restaurant;
 
 import com.graduation.model.Restaurant;
-import com.graduation.repository.RestaurantRepository;
+import com.graduation.controller.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,14 +11,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
-import static com.graduation.Util.ValidationUtil.checkNotFoundWithId;
+import static com.graduation.util.ValidationUtil.checkNotFoundWithId;
 
 @RestController
-@RequestMapping(value = RestRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestRestaurantController {
+@RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantRestController {
     public static final String REST_URL = "/rest/admin/restaurant";
 
     @Autowired
@@ -31,12 +30,7 @@ public class RestRestaurantController {
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
-        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
-    }
-
-    @GetMapping("/by/{date}")
-    public List<Restaurant> getAllByDate(@PathVariable LocalDate date) {
-        return repository.getByDate(date);
+        return checkNotFoundWithId(repository.findById(id).orElseThrow(), id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -52,11 +46,5 @@ public class RestRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         checkNotFoundWithId(repository.delete(id), id);
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Restaurant restaurant) {
-        repository.save(restaurant);
     }
 }

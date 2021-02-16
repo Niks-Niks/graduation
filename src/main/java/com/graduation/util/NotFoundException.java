@@ -1,4 +1,4 @@
-package com.graduation.Util;
+package com.graduation.util;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String msg) {

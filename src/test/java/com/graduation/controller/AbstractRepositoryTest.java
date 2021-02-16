@@ -1,12 +1,9 @@
-package com.graduation.repository;
+package com.graduation.controller;
 
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -19,14 +16,15 @@ import javax.annotation.PostConstruct;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-@SpringJUnitConfig(locations = {
+@SpringJUnitWebConfig(locations = {
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml",
-        "classpath:spring/spring-mvc.xml"
+        "classpath:spring/spring-mvc.xml",
+        "classpath:spring/spring-db.xml"
 })
-@ExtendWith(SpringExtension.class)
+//@WebAppConfiguration
+//@ExtendWith(SpringExtension.class)
 @Transactional
-@Sql(scripts = "classpath:db/population_DB", config = @SqlConfig(encoding = "UTF-8"))
+@ActiveProfiles("datajpa")
 public abstract class AbstractRepositoryTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();

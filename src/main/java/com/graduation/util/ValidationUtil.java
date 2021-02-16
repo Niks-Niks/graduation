@@ -1,4 +1,4 @@
-package com.graduation.Util;
+package com.graduation.util;
 
 import com.graduation.HasId;
 import org.springframework.http.ResponseEntity;

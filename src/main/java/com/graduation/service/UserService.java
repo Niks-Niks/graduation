@@ -2,15 +2,12 @@ package com.graduation.service;
 
 import com.graduation.AuthorizedUser;
 import com.graduation.model.User;
-import com.graduation.repository.UserRepository;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+import com.graduation.controller.UserRepository;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,8 +15,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.graduation.Util.ValidationUtil.checkNotFoundWithId;
-
+import static com.graduation.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -43,7 +39,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User get(int id) {
-        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
+        return checkNotFoundWithId(repository.findById(id).orElseThrow(), id);
     }
 
     public List<User> findAll() {
@@ -80,9 +76,5 @@ public class UserService implements UserDetailsService {
         user.setPassword(StringUtils.hasText(password) ? passwordEncoder.encode(password) : password);
         user.setEmail(user.getEmail().toLowerCase());
         return user;
-    }
-
-    public List<User> getByVoice(int id) {
-        return repository.getByVoice(id);
     }
 }
